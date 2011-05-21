@@ -2,53 +2,37 @@
 # with the runit supervision system.  see
 # smarden.org/runit for more information.
 
-
-# Maintainer: Kevin Berry <deathsyn@gmail.com>
-pkgname='runit-run-git'
-pkgver=20120128
-pkgrel=1
+# Contributor: Kevin Berry <kb@rubyists.com>
+# Maintainer: TJ Vanderpoel <tj@rubyists.com>
+pkgname='runit-run'
+pkgver=1.0.0
+pkgrel=2
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
-conflicts=('initscripts')
-depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools' 'syslog-ng')
-makedepends=('git')
-optdepends=('socklog-dietlibc: advanced logging system' 
-            'sv-helper: Wrapper for easy service management')
-backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
+conflicts=('runit-run-git')
+depends=('runit-dietlibc')
+optdepends=('socklog-dietlibc: advanced logging system' 'runit-services: a collection of commonly used service directories')
+backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
-source=('COPYRIGHT')
-md5sums=('00378d23a0f0d8bb6dbc60d9f0578b7c')
-
-_gitroot="git://github.com/rubyists/runit-run.git"
-_gitname="runit-run"
-
-build() {
-  cd "$srcdir"
-  msg "Connecting to GIT server...."
-
-  if [ -d $_gitname ] ; then
-    cd $_gitname && git pull origin
-    git checkout master
-    msg "The local files are updated."
-  else
-    git clone --depth=1 $_gitroot $_gitname
-    git checkout master
-  fi
-
-  msg "GIT checkout done or server timeout"
-}
+source=('https://download.github.com/rubyists-runit-run-v1.0.0-0-g81f4e28.tar.gz')
+md5sums=('bcddf2dd754e77515f2431e3bb705059')
 
 package() {
-  cd "$srcdir/$_gitname/"
-
-  # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
-  install -D -d "$pkgdir/etc/runit/rc/functions.d"
-  install -m 0755 etc/runit/rc/functions "$pkgdir/etc/runit/rc/functions"
-  for fun in etc/runit/rc/functions.d/*;do
-    install -m 0755 etc/runit/rc/functions.d/${fun##*/}  "$pkgdir/etc/runit/rc/functions.d/${fun##*/}"
+  cd "$srcdir/rubyists-runit-run-5628518/"
+  install -D -m 0755 etc/runit/1 $pkgdir/etc/runit/1
+  install -m 0755 etc/runit/2 $pkgdir/etc/runit/2
+  install -m 0755 etc/runit/3 $pkgdir/etc/runit/3
+  install -m 0755 etc/runit/ctrlaltdel $pkgdir/etc/runit/ctrlaltdel
+  install -d $pkgdir/etc/runit/runsvdir/runit-run-default
+  install -d $pkgdir/etc/runit/runsvdir/archlinux-default
+  install -D -m 0644 README.runit-run $pkgdir/usr/share/doc/runit-run/README
+  install -D -m 0644 COPYRIGHT $pkgdir/usr/share/doc/runit-run/COPYRIGHT
+  install -d $pkgdir/etc/sv
+  for service in etc/sv/*;do
+    cp -a $service $pkgdir/etc/sv/
   done
   install -m 0755 etc/runit/rc/functions.d/sshd-close-sessions  "$pkgdir/etc/runit/rc/functions.d/sshd-close-sessions"
 
