@@ -20,9 +20,10 @@ optdepends=('socklog-dietlibc: advanced logging system'
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=('https://github.com/downloads/rubyists/runit-run/runit-run-1.0.0-4.tar.gz')
+md5sums=('bcba50f5552d0fcb90a1dc1a0bffc4b8')
 
 package() {
-  cd "$srcdir/runit-run-1.0.0/"
+  cd "$srcdir/runit-run/"
   install -D -m 0755 etc/runit/1 $pkgdir/etc/runit/1
   install -m 0755 etc/runit/2 $pkgdir/etc/runit/2
   install -m 0755 etc/runit/3 $pkgdir/etc/runit/3
