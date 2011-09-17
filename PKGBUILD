@@ -6,7 +6,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname='runit-run'
 pkgver=1.0.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
@@ -19,7 +19,7 @@ optdepends=('socklog-dietlibc: advanced logging system'
             'runit-services: a collection of commonly used service directories')
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
-source=('https://github.com/downloads/rubyists/runit-run/runit-run-1.0.0-4.tar.gz')
+source=('https://github.com/downloads/rubyists/runit-run/runit-run-1.0.0-5.tar.gz')
 md5sums=('bcba50f5552d0fcb90a1dc1a0bffc4b8')
 
 package() {
