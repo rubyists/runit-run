@@ -12,7 +12,7 @@ arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
-depends=('runit-dietlibc fgetty')
+depends=('runit-dietlibc' 'fgetty')
 makedepends=('git')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management'
