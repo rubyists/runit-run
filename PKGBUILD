@@ -38,6 +38,7 @@ package() {
     cp -a $service $pkgdir/etc/sv/
   done
   ln -s /etc/sv/ngetty $pkgdir/etc/runit/runsvdir/archlinux-default
+  ln -s /etc/sv/ngetty $pkgdir/etc/runit/runsvdir/runit-run-default
     
   ln -s /etc/sv/syslog-ng $pkgdir/etc/runit/runsvdir/archlinux-default/
   ln -s /etc/sv/cron $pkgdir/etc/runit/runsvdir/archlinux-default/
