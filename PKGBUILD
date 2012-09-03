@@ -41,25 +41,20 @@ build() {
 
 package() {
   cd "$srcdir/$_gitname/"
-  install -D -m 0755 etc/runit/1 $pkgdir/etc/runit/1
-  install -m 0755 etc/runit/2 $pkgdir/etc/runit/2
-  install -m 0755 etc/runit/3 $pkgdir/etc/runit/3
-  install -m 0755 etc/runit/ctrlaltdel $pkgdir/etc/runit/ctrlaltdel
-  install -d $pkgdir/etc/runit/runsvdir/runit-run-default
-  install -d $pkgdir/etc/runit/runsvdir/archlinux-default
-  install -D -m 0644 README.runit-run $pkgdir/usr/share/doc/runit-run/README
-  install -d $pkgdir/etc/sv
+  install -D -m 0755 etc/runit/1 "$pkgdir/etc/runit/1"
+  install -m 0755 etc/runit/2 "$pkgdir/etc/runit/2"
+  install -m 0755 etc/runit/3 "$pkgdir/etc/runit/3"
+  install -m 0755 etc/runit/ctrlaltdel "$pkgdir/etc/runit/ctrlaltdel"
+  install -d "$pkgdir/etc/runit/runsvdir/runit-run-default"
+  install -d "$pkgdir/etc/runit/runsvdir/archlinux-default"
+  install -D -m 0644 README.runit-run "$pkgdir/usr/share/doc/runit-run/README"
+  install -d "$pkgdir/etc/sv"
   for service in etc/sv/*;do
-    cp -a $service $pkgdir/etc/sv/
+    cp -a $service "$pkgdir/etc/sv/"
   done
-  ln -s /etc/sv/fgetty-tty2 $pkgdir/etc/runit/runsvdir/runit-run-default
-  ln -s /etc/sv/fgetty-tty3 $pkgdir/etc/runit/runsvdir/runit-run-default
-  ln -s /etc/sv/fgetty-tty2 $pkgdir/etc/runit/runsvdir/archlinux-default
-  ln -s /etc/sv/fgetty-tty3 $pkgdir/etc/runit/runsvdir/archlinux-default
-  for s in 1 4 5 6;do
-    ln -s /etc/sv/agetty-tty${s} $pkgdir/etc/runit/runsvdir/archlinux-default
-  done
+  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/runit-run-default"
+  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/runit-run-default"
     
-  ln -s /etc/sv/syslog-ng $pkgdir/etc/runit/runsvdir/archlinux-default/
-  ln -s /etc/sv/cron $pkgdir/etc/runit/runsvdir/archlinux-default/
+  ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
+  ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
 } 
