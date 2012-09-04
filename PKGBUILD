@@ -3,8 +3,8 @@
 # smarden.org/runit for more information.
 
 
-# Contributor: TJ Vanderpoel <tj@rubyists.com>
-# Maintainer: Kevin Berry <kb@rubyists.com>
+# Author: Kevin Berry <kb@rubyists.com>
+# Maintaner: TJ Vanderpoel <tj@rubyists.com>
 pkgname='runit-run'
 pkgver=1.0.3
 pkgrel=1
