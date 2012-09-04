@@ -6,8 +6,8 @@
 # Contributor: TJ Vanderpoel <tj@rubyists.com>
 # Maintainer: Kevin Berry <kb@rubyists.com>
 pkgname='runit-run'
-pkgver=1.0.1
-pkgrel=3
+pkgver=1.0.3
+pkgrel=1
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
@@ -40,6 +40,9 @@ package() {
   ln -s /etc/sv/ngetty $pkgdir/etc/runit/runsvdir/archlinux-default
   ln -s /etc/sv/ngetty $pkgdir/etc/runit/runsvdir/runit-run-default
     
+  # For syslog in runit we prefer socklog, leaving it out of runit-run-default
   ln -s /etc/sv/syslog-ng $pkgdir/etc/runit/runsvdir/archlinux-default/
+
   ln -s /etc/sv/cron $pkgdir/etc/runit/runsvdir/archlinux-default/
+  ln -s /etc/sv/cron $pkgdir/etc/runit/runsvdir/runit-run-default/
 } 
