@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# /etc/runit/rc/rc.local.shutdown: Local shutdown script.
+#
+

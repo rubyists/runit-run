@@ -12,4 +12,4 @@ sv exit /etc/runit/runsvdir/current/*
 
 echo 'Shutdown...'
 export RUNLEVEL=$LAST
-/etc/rc.shutdown $LAST
+/etc/runit/rc/rc.shutdown $LAST

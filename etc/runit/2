@@ -10,9 +10,9 @@ else
   default=default
 fi
 if [ "$default" == "single" ];then
-  /etc/rc.single
+  /etc/runit/rc/rc.single
 else
-  /etc/rc.multi
+  /etc/runit/rc/rc.multi
 fi
 runsvchdir $default
 
