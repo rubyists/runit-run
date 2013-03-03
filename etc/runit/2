@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
+
+cmdline=$(awk '{print $(NF)}' /proc/cmdline)
+
+if [ -d /etc/runit/runsvdir/$cmdline ];then
+  default=$cmdline
+else
+  default=default
+fi
+if [ "$default" == "single" ];then
+  /etc/runit/rc/rc.single
+else
+  /etc/runit/rc/rc.multi
+fi
+runsvchdir $default
+
+exec env - PATH=$PATH \
+runsvdir -P /service 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'

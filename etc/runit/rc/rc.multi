@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# /etc/runit/rc/rc.multi
+#
+
+. /etc/runit/rc/rc.conf
+. /etc/runit/rc/functions
+
+run_hook multi_start
+
+# Load sysctl config files
+/usr/lib/systemd/systemd-sysctl
+
+# Load additional binary formats
+mountpoint -q /proc/sys/fs/binfmt_misc || mount /proc/sys/fs/binfmt_misc &>/dev/null ||
+	mount -t binfmt_misc binfmt /proc/sys/fs/binfmt_misc
+/usr/lib/systemd/systemd-binfmt
+
+# Start daemons
+for daemon in "${DAEMONS[@]}"; do
+	case ${daemon:0:1} in
+		'!') continue;;     # Skip this daemon.
+		'@') start_daemon_bkgd "${daemon#@}";;
+		*)   start_daemon "$daemon";;
+	esac
+done
+
+[[ -x /etc/runit/rc/rc.local ]] && /etc/runit/rc/rc.local
+
+run_hook multi_end
+
+bootlogd_stop
+
+rm -f /run/nologin
+
+# vim: set ts=2 sw=2 noet:

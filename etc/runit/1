@@ -1,0 +1,9 @@
+#!/bin/sh
+# system one time tasks
+
+PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
+
+/etc/runit/rc/rc.sysinit
+
+touch /etc/runit/stopit
+chmod 0 /etc/runit/stopit
