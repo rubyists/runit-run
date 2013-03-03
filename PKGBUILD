@@ -67,6 +67,7 @@ package() {
   done
 
   install -D -m 0644 README.runit-run "$pkgdir/usr/share/doc/runit-run/README"
+  install -D -m 0644 COPYRIGHT "$pkgdir/usr/share/doc/runit-run/COPYRIGHT"
 
   # Any core services needed to run (cron, syslog, getties)
   install -d "$pkgdir/etc/sv"
