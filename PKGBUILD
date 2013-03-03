@@ -41,20 +41,46 @@ build() {
 
 package() {
   cd "$srcdir/$_gitname/"
-  install -D -m 0755 etc/runit/1 "$pkgdir/etc/runit/1"
-  install -m 0755 etc/runit/2 "$pkgdir/etc/runit/2"
-  install -m 0755 etc/runit/3 "$pkgdir/etc/runit/3"
-  install -m 0755 etc/runit/ctrlaltdel "$pkgdir/etc/runit/ctrlaltdel"
-  install -d "$pkgdir/etc/runit/runsvdir/runit-run-default"
-  install -d "$pkgdir/etc/runit/runsvdir/archlinux-default"
+
+  # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
+  install -D -d "$pkgdir/etc/runit/rc/functions.d"
+  install -m 0755 etc/runit/rc/functions "$pkgdir/etc/runit/rc/functions"
+  for fun in etc/runit/rc/functions.d/*;do
+    install -m 0755 etc/runit/rc/functions.d/${fun##*/}  "$pkgdir/etc/runit/rc/functions.d/${fun##*/}"
+  done
+  install -m 0755 etc/runit/rc/functions.d/sshd-close-sessions  "$pkgdir/etc/runit/rc/functions.d/sshd-close-sessions"
+
+  # The rc. scripts. Cloned from arch initscripts, Feb 2013
+  for script in sysinit single multi shutdown local local.shutdown; do
+    install -m 0755 etc/runit/rc/rc.${script} "$pkgdir/etc/runit/rc/rc.${script}"
+  done
+
+  # For legagy rc.conf stuff
+  install -m 0644 etc/runit/rc/rc.conf "$pkgdir/etc/runit/rc/rc.conf"
+
+  # The 3 init levels. Startup (1), runtime (2), and shutdown (2), plus
+  # the script for action to taks on ctrl-alt-del
+  for init in 1 2 3 ctrlaltdel;do
+    install -m 0755 etc/runit/${init} "$pkgdir/etc/runit/${init}"
+  done
+
   install -D -m 0644 README.runit-run "$pkgdir/usr/share/doc/runit-run/README"
+
+  # Any core services needed to run (cron, syslog, getties)
   install -d "$pkgdir/etc/sv"
   for service in etc/sv/*;do
     cp -a $service "$pkgdir/etc/sv/"
   done
-  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/runit-run-default"
-  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/runit-run-default"
-    
+
+  # Add a couple service levels
+  install -d "$pkgdir/etc/runit/runsvdir/runit-run-default" # sshd, no syslog
+  install -d "$pkgdir/etc/runit/runsvdir/archlinux-default" # Standard, with syslog and sshd
+  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/runit-run-default/"
+  ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/runit-run-default/"
+  ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/runit-run-default/"
+
+  ln -s /etc/sv/ngetty "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
+  ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
 } 
