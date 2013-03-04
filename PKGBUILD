@@ -67,4 +67,8 @@ package() {
   ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
+
+  # Link rc.conf and rc/ for legacy rc.d/ script compatibility
+  ln -s /etc/runit/rc "$pkgdir/etc/rc"
+  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/rc.conf"
 } 
