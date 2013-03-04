@@ -13,10 +13,9 @@ url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
 conflicts=('runit-run-git')
-depends=('runit-dietlibc' 'ngetty')
+depends=('runit' 'runit-services >= 1.1.0' 'ngetty')
 optdepends=('socklog-dietlibc: advanced logging system' 
-            'sv-helper: Wrapper for management of services'
-            'runit-services: a collection of commonly used service directories')
+            'sv-helper: Wrapper for easy service management')
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=('https://github.com/downloads/rubyists/runit-run/runit-run-1.0.1-2.tar.gz')
