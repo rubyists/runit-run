@@ -6,7 +6,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname='runit-run'
 pkgver=1.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
