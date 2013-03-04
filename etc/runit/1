@@ -5,5 +5,7 @@ PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
 
 /etc/runit/rc/rc.sysinit
 
+install -D -d -m 0755 /run/runit/sv
+
 touch /etc/runit/stopit
 chmod 0 /etc/runit/stopit
