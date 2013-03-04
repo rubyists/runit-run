@@ -12,15 +12,13 @@ arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
-depends=('runit' 'runit-services>=1.1.0' 'ngetty')
+depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
 makedepends=('git')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management')
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
-_sysvinit_version="2.88"
-_sysvinit_url="http://download.savannah.gnu.org/releases/sysvinit/sysvinit-${_sysvinit_version}dsf.tar.bz2"
-source=('COPYRIGHT' $_sysvinit_url)
+source=('COPYRIGHT')
 md5sums=('00378d23a0f0d8bb6dbc60d9f0578b7c')
 
 _gitroot="git://github.com/rubyists/runit-run.git"
@@ -40,23 +38,9 @@ build() {
   fi
 
   msg "GIT checkout done or server timeout"
-  cd "$srcdir/sysvinit-${_sysvinit_version}dsf"
-  make ROOT="${pkgdir}" install
 }
 
 package() {
-  cd "${pkgdir}"
-  # provided by util-linux
-  rm bin/mountpoint
-  rm usr/share/man/man1/mountpoint.1
-  rm usr/bin/{mesg,utmpdump,wall}
-  rm usr/share/man/man1/{mesg,utmpdump,wall}.1
-  rm sbin/sulogin
-  rm usr/share/man/man8/sulogin.8
-  # We don't use these
-  rm sbin/{init,shutdown,telinit,runlevel}
-  rm usr/share/man/man8/{shutdown,init,runlevel,telinit}.8 
-  
   cd "$srcdir/$_gitname/"
 
   # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
