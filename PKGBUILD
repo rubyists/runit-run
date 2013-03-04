@@ -12,6 +12,7 @@ arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
+conflicts=('initscripts')
 depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
 makedepends=('git')
 optdepends=('socklog-dietlibc: advanced logging system' 
