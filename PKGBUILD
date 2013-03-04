@@ -49,12 +49,6 @@ package() {
   install -D -m 0644 README.runit-run "$pkgdir/usr/share/doc/runit-run/README"
   install -D -m 0644 COPYRIGHT "$pkgdir/usr/share/doc/runit-run/COPYRIGHT"
 
-  # Any core services needed to run (cron, syslog, getties)
-  install -d "$pkgdir/etc/sv"
-  for service in etc/sv/*;do
-    cp -a $service $pkgdir/etc/sv/
-  done
-
   # Add a couple service levels
   install -d "$pkgdir/etc/runit/runsvdir/runit-run-default" # sshd, no syslog
   install -d "$pkgdir/etc/runit/runsvdir/archlinux-default" # Standard, with syslog and sshd
