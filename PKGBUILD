@@ -13,7 +13,7 @@ url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
 conflicts=('runit-run-git')
-depends=('runit' 'runit-services>=1.1.0' 'ngetty')
+depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management')
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
