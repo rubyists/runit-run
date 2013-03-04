@@ -35,7 +35,6 @@ halt -w
 
 # any future uevents can and should be ignored
 status "Shutting down udev" udevadm control --exit
-status "Unmounting NFS volumes" umount -at nfs
 run_hook shutdown_prekillall
 
 kill_all
