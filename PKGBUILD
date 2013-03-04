@@ -18,7 +18,7 @@ optdepends=('socklog-dietlibc: advanced logging system'
             'sv-helper: Wrapper for easy service management')
 backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
-source=("http://archive.rubyists.com/aur/runit-run/runit-run-${pkgver}-${pkgrel}.tar.gz")
+source=("http://s3.amazonaws.com/rubyists/aur/${pgkname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
 md5sums=('fce3c7b355dedd8d07a807c27ba18ebc')
 
 package() {
