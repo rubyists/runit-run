@@ -17,7 +17,7 @@ depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
 makedepends=('git')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management')
-backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
+backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=('COPYRIGHT')
 md5sums=('00378d23a0f0d8bb6dbc60d9f0578b7c')
@@ -59,6 +59,8 @@ package() {
 
   # For legagy rc.conf stuff
   install -m 0644 etc/runit/rc/rc.conf "$pkgdir/etc/runit/rc/rc.conf"
+  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/"
+  ln -s /etc/runit/rc/functions "$pkgdir/etc/rc.d"
 
   # The 3 init levels. Startup (1), runtime (2), and shutdown (2), plus
   # the script for action to taks on ctrl-alt-del
