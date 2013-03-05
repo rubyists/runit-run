@@ -5,7 +5,10 @@ PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
 
 /etc/runit/rc/rc.sysinit
 
+# For holding supervise directories
 install -D -d -m 0755 /run/runit/sv
+# For runit-musl compatibility
+ln -s /etc/runit/runsvdir /run/runit/
 
 touch /etc/runit/stopit
 chmod 0 /etc/runit/stopit
