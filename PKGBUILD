@@ -2,47 +2,27 @@
 # with the runit supervision system.  see
 # smarden.org/runit for more information.
 
-
-# Maintainer: Kevin Berry <deathsyn@gmail.com>
-pkgname='runit-run-git'
-pkgver=20120128
-pkgrel=1
+# Maintainer: TJ Vanderpoel <tj@rubyists.com>
+# Maintainer: Kevin Berry <kb@rubyists.com>
+pkgname='runit-run'
+pkgver=1.1.1
+pkgrel=2
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
 license=('custom')
 provides=('runit-run')
-conflicts=('initscripts')
+conflicts=('runit-run-git' 'initscripts')
 depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
-makedepends=('git')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management')
 backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
-source=('COPYRIGHT')
-md5sums=('00378d23a0f0d8bb6dbc60d9f0578b7c')
-
-_gitroot="git://github.com/rubyists/runit-run.git"
-_gitname="runit-run"
-
-build() {
-  cd "$srcdir"
-  msg "Connecting to GIT server...."
-
-  if [ -d $_gitname ] ; then
-    cd $_gitname && git pull origin
-    git checkout master
-    msg "The local files are updated."
-  else
-    git clone --depth=1 $_gitroot $_gitname
-    git checkout master
-  fi
-
-  msg "GIT checkout done or server timeout"
-}
+source=("https://s3.amazonaws.com/rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
+md5sums=('1e97e3b1e2b39c038de7bc4ff8007ce6')
 
 package() {
-  cd "$srcdir/$_gitname/"
+  cd "$srcdir/runit-run/"
 
   # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
   install -D -d "$pkgdir/etc/runit/rc/functions.d"
@@ -82,4 +62,8 @@ package() {
   ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
+
+  # Link rc.conf and rc/ for legacy rc.d/ script compatibility
+  ln -s /etc/runit/rc "$pkgdir/etc/rc"
+  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/rc.conf"
 } 
