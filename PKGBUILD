@@ -16,7 +16,7 @@ conflicts=('runit-run-git' 'initscripts')
 depends=('runit' 'runit-services>=1.1.0' 'ngetty' 'sysvinit' 'sysvinit-tools')
 optdepends=('socklog-dietlibc: advanced logging system' 
             'sv-helper: Wrapper for easy service management')
-backup=('etc/runit/1' 'etc/runit/2' 'etc/runit/3')
+backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=("https://s3.amazonaws.com/rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
 md5sums=('cedf09cbb50d83bf4f28c5fd417b13cf')
