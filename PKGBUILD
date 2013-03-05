@@ -59,7 +59,7 @@ package() {
 
   # For legagy rc.conf stuff
   install -m 0644 etc/runit/rc/rc.conf "$pkgdir/etc/runit/rc/rc.conf"
-  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/"
+  install -m 0755 -d -D "$pkgdir/etc/rc.d"
   ln -s /etc/runit/rc/functions "$pkgdir/etc/rc.d"
 
   # The 3 init levels. Startup (1), runtime (2), and shutdown (2), plus
