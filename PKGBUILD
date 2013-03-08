@@ -19,7 +19,7 @@ optdepends=('socklog-dietlibc: advanced logging system'
 backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=("https://s3.amazonaws.com/rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
-md5sums=('5245434aacb8eaa11f93813d1bd2a5ac')
+md5sums=('170d764f2eeb49a71a8eaf27ea57cbfb')
 
 package() {
   cd "$srcdir/runit-run/"
