@@ -6,7 +6,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname='runit-run'
 pkgver=1.1.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
@@ -19,21 +19,16 @@ optdepends=('socklog-dietlibc: advanced logging system'
 backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=("https://s3.amazonaws.com/rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
-md5sums=('170d764f2eeb49a71a8eaf27ea57cbfb')
+md5sums=('e8437d7bd53e2470ce18ca7afb39cf3f')
 
 package() {
-  cd "$srcdir/runit-run/"
-  install -D -m 0755 etc/runit/1 $pkgdir/etc/runit/1
-  install -m 0755 etc/runit/2 $pkgdir/etc/runit/2
-  install -m 0755 etc/runit/3 $pkgdir/etc/runit/3
-  install -m 0755 etc/runit/ctrlaltdel $pkgdir/etc/runit/ctrlaltdel
-  install -d $pkgdir/etc/runit/runsvdir/runit-run-default
-  install -d $pkgdir/etc/runit/runsvdir/archlinux-default
-  install -D -m 0644 README.runit-run $pkgdir/usr/share/doc/runit-run/README
-  install -D -m 0644 COPYRIGHT $pkgdir/usr/share/doc/runit-run/COPYRIGHT
-  install -d $pkgdir/etc/sv
-  for service in etc/sv/*;do
-    cp -a $service $pkgdir/etc/sv/
+  cd "$srcdir/$_gitname/"
+
+  # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
+  install -D -d "$pkgdir/etc/runit/rc/functions.d"
+  install -m 0755 etc/runit/rc/functions "$pkgdir/etc/runit/rc/functions"
+  for fun in etc/runit/rc/functions.d/*;do
+    install -m 0755 etc/runit/rc/functions.d/${fun##*/}  "$pkgdir/etc/runit/rc/functions.d/${fun##*/}"
   done
 
   # The rc. scripts. Cloned from arch initscripts, Feb 2013
@@ -66,8 +61,4 @@ package() {
   ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
-
-  # Link rc.conf and rc/ for legacy rc.d/ script compatibility
-  ln -s /etc/runit/rc "$pkgdir/etc/rc"
-  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/rc.conf"
 } 
