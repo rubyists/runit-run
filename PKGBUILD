@@ -50,7 +50,6 @@ package() {
   for fun in etc/runit/rc/functions.d/*;do
     install -m 0755 etc/runit/rc/functions.d/${fun##*/}  "$pkgdir/etc/runit/rc/functions.d/${fun##*/}"
   done
-  install -m 0755 etc/runit/rc/functions.d/sshd-close-sessions  "$pkgdir/etc/runit/rc/functions.d/sshd-close-sessions"
 
   # The rc. scripts. Cloned from arch initscripts, Feb 2013
   for script in sysinit single multi shutdown local local.shutdown; do
@@ -62,7 +61,7 @@ package() {
   install -m 0755 -d -D "$pkgdir/etc/rc.d"
   ln -s /etc/runit/rc/functions "$pkgdir/etc/rc.d"
 
-  # The 3 init levels. Startup (1), runtime (2), and shutdown (2), plus
+  # The 3 init levels. Startup (1), runtime (2), and shutdown (3), plus
   # the script for action to taks on ctrl-alt-del
   for init in 1 2 3 ctrlaltdel;do
     install -m 0755 etc/runit/${init} "$pkgdir/etc/runit/${init}"
@@ -82,4 +81,8 @@ package() {
   ln -s /etc/sv/syslog-ng "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/sshd "$pkgdir/etc/runit/runsvdir/archlinux-default/"
   ln -s /etc/sv/cron "$pkgdir/etc/runit/runsvdir/archlinux-default/"
+
+  # Link rc.conf and rc/ for legacy rc.d/ script compatibility
+  ln -s /etc/runit/rc "$pkgdir/etc/rc"
+  ln -s /etc/runit/rc/rc.conf "$pkgdir/etc/rc.conf"
 } 
