@@ -6,6 +6,12 @@ PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
 LAST=0
 test -x /etc/runit/reboot && LAST=6
 
+# Stop any legacy (one-time) daemons
+. /etc/rc.conf
+for daemon in $DAEMONS;do
+  /etc/init.d/$daemon stop
+done
+
 echo 'Waiting for services to stop...'
 sv -w19 force-stop /etc/runit/runsvdir/current/*
 sv exit /etc/runit/runsvdir/current/*
