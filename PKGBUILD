@@ -6,7 +6,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname='runit-run'
 pkgver=1.1.2
-pkgrel=3
+pkgrel=5
 pkgdesc="A SysV replacement init scheme with parallel start-up and flexible service directories"
 arch=('i686' 'x86_64')
 url="http://github.com/rubyists/runit-run"
@@ -19,10 +19,10 @@ optdepends=('socklog-dietlibc: advanced logging system'
 backup=('etc/rc.conf' 'etc/runit/1' 'etc/runit/2' 'etc/runit/3')
 install='runit-run.install'
 source=("https://s3.amazonaws.com/rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz")
-md5sums=('e8437d7bd53e2470ce18ca7afb39cf3f')
+md5sums=('6370f83be667cba9962ffd19e473f705')
 
 package() {
-  cd "$srcdir/$_gitname/"
+  cd "$srcdir/$pkgname"
 
   # Support functions for rc. scripts. Cloned from arch initscripts, Feb 2013
   install -D -d "$pkgdir/etc/runit/rc/functions.d"
