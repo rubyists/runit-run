@@ -14,9 +14,9 @@ s3cmd put "${pkgname}-${pkgver}-${pkgrel}.tar.gz" s3://rubyists/aur/${pkgname}/"
 s3cmd setacl --acl-public "s3://rubyists/aur/${pkgname}/${pkgname}-${pkgver}-${pkgrel}.tar.gz"
 makepkg -g >> PKGBUILD
 vim PKGBUILD
-makepkg --source
+mkaurball
 if [ -v AUR_USER ];then
-  aurupload $AUR_USER $(<~/.aurpass) system ${pkgname}-${pkgver}-${pkgrel}.src.tar.gz
+  burp -u $AUR_USER -p $(<~/.aurpass) -c system -C ~/.burpcookies ${pkgname}-${pkgver}-${pkgrel}.src.tar.gz
 else
   echo "Don't forget to upload to AUR"
 fi
